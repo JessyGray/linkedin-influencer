@@ -1,0 +1,19 @@
+{
+  "timezone": "Europe/Berlin",
+  "posts": [
+    {
+      "at": "2026-11-10T08:10:00+01:00",
+      "pillar": "what I built",
+      "format": "build log",
+      "text": "Last week a bakery owner asked me why her site shows up on page 4.\n\nThe answer was boring: no page titles, no address in the footer, photos named IMG_2041.jpg.\n\nI fixed those three things in an afternoon. Nothing clever.\n\nWhat is the most boring fix that worked for you?",
+      "manual": false
+    },
+    {
+      "at": "2026-11-12T12:20:00+01:00",
+      "pillar": "lessons",
+      "format": "document",
+      "text": "Carousel: 5 checks before you launch a small business site",
+      "manual": true
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "linkedin-influencer-publisher",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" }
+}

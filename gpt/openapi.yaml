@@ -1,0 +1,75 @@
+openapi: 3.1.0
+info:
+  title: LinkedIn Influencer Publisher
+  version: 1.0.0
+  description: Queue LinkedIn posts for automatic publishing. Self-hosted, see the publisher folder of the repo.
+servers:
+  - url: https://YOUR-PUBLISHER.vercel.app
+paths:
+  /api/queue:
+    get:
+      operationId: listQueue
+      summary: List upcoming and recent posts
+      responses:
+        "200":
+          description: Posts
+    post:
+      operationId: queuePosts
+      summary: Queue posts. Items with manual=true are skipped.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [posts]
+              properties:
+                timezone:
+                  type: string
+                posts:
+                  type: array
+                  items:
+                    type: object
+                    required: [at, text]
+                    properties:
+                      at:
+                        type: string
+                        description: ISO 8601 time with offset, e.g. 2026-11-10T08:10:00+01:00
+                      text:
+                        type: string
+                        maxLength: 3000
+                      pillar:
+                        type: string
+                      format:
+                        type: string
+                      manual:
+                        type: boolean
+      responses:
+        "200":
+          description: Queued posts with their ids
+    delete:
+      operationId: cancelPost
+      summary: Cancel a scheduled post
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Cancelled
+  /api/status:
+    get:
+      operationId: getStatus
+      summary: LinkedIn token expiry and queue counts
+      responses:
+        "200":
+          description: Status
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security:
+  - bearer: []

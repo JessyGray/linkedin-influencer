@@ -1,0 +1,20 @@
+# Runs the publisher every 15 minutes so posts go out close to their planned time.
+# Vercel's free cron runs once a day, so this is what makes exact times work.
+# Setup: repo Settings → Secrets and variables → Actions → add PUBLISHER_URL and PUBLISHER_KEY (your ADMIN_KEY).
+name: publish
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Publish due posts
+        env:
+          URL: ${{ secrets.PUBLISHER_URL }}
+          KEY: ${{ secrets.PUBLISHER_KEY }}
+        run: |
+          if [ -z "$URL" ] || [ -z "$KEY" ]; then echo "PUBLISHER_URL or PUBLISHER_KEY not set, skipping."; exit 0; fi
+          curl -fsS -H "Authorization: Bearer $KEY" "$URL/api/cron/publish"
